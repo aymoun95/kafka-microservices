@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-50: #f9fafb;
+  --color-primary-100: #f3f4f6;
+  --color-primary-200: #e5e7eb;
+  --color-primary-300: #d1d5db;
+  --color-primary-400: #9ca3af;
+  --color-primary-500: #6b7280;
+  --color-primary-600: #4b5563;
+  --color-primary-700: #374151;
+  --color-primary-800: #1f2937;
+  --color-primary-900: #111827;
+  --color-primary-950: #030712;
+}
+
+@layer base {
+  body {
+    @apply bg-[#F5F5F5] text-slate-900 antialiased min-h-screen;
+    font-family:
+      "Inter",
+      system-ui,
+      -apple-system,
+      sans-serif;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white backdrop-blur-xl border border-gray-200 shadow-sm;
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 bg-black hover:bg-gray-900 text-white rounded-lg font-medium transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 bg-white hover:bg-gray-50 text-black rounded-lg font-medium transition-all duration-200 active:scale-95 border border-gray-300;
+  }
+}
