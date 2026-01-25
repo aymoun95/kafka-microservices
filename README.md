@@ -1,55 +1,115 @@
-# E-commerce Microservices with Kafka
+# The Boutique - Event-Driven E-Commerce Platform
 
-This project demonstrates a simple microservices architecture for an e-commerce application using Express, TypeScript, and Kafka, all containerized with Docker.
+A modern, event-driven e-commerce microservices application built with Node.js, React, and Apache Kafka. This project demonstrates complex distributed system patterns including choreography-based sagas, event sourcing, and real-time updates.
 
-## Architecture
+## 🏗 Architecture
 
-- **Auth Service (Port 3000)**: Handles user signup. Emits `user-created`.
-- **Products Service (Port 3001)**: REST API for product catalog.
-- **Orders Service (Port 3002)**: Creates orders. Emits `order-created`. Listens for `payment-created` and `expiration-complete`.
-- **Payments Service (Port 3003)**: Listens for `order-created`. Provides manual `/pay` endpoint. Emits `payment-created`.
-- **Expiration Service**: Listens for `order-created`. Emits `expiration-complete` after a 15-second delay (unless cancelled by payment).
-- **Kafka & Kafka UI (Port 8080)**: Event streaming platform and visual management interface.
+The application is composed of loosely coupled microservices that communicate asynchronously via Kafka events.
 
-## Quick Start
+### Microservices
 
-1. **Start everything**:
+- **Auth Service (`/auth`)**: Handles user authentication (JWT), signup/signin flows.
+- **Products Service**: Manages product catalog and inventory checks.
+- **Orders Service (`/orders`)**: Core order management. Handles order creation, status transitions (Created -> Cancelled/Completed), and coordinates the order saga.
+- **Payments Service (`/payments`)**: Processes mock payments. Listens for created orders and emits payment completed events.
+- **Expiration Service (`/expiration`)**: Manages order timeouts. Uses BullMQ (Redis) to schedule expiration events (15-minute window for payment).
+- **Client (`/client`)**: A modern React 19 application with a premium, minimalist UI.
 
-   ```bash
-   docker compose up --build -d
-   ```
+### Event Bus (Apache Kafka)
 
-2. **Access the Visual Dashboard**:
-   - Kafka UI: [http://localhost:8080](http://localhost:8080)
-   - Storefront (Web Client): [http://localhost:5173](http://localhost:5173) (requires manual start, see below)
+Services publish and subscribe to domain events:
 
-## Running the Web Client
+- `product:created`
+- `order:created`
+- `order:cancelled`
+- `payment:created`
+- `expiration:complete`
 
-The React client is not containerized to allow for easier development (Hot Module Replacement).
+## 🚀 Tech Stack
 
-```bash
-cd client
-npm install
-npm run dev
+- **Frontend**: React 19, TypeScript, TailwindCSS v4 (Minimalist "Boutique" Theme), Vite.
+- **Backend**: Node.js, Express, TypeScript.
+- **Messaging**: Apache Kafka (Redpanda for local dev).
+- **Database**: MongoDB.
+- **Queue**: Redis (BullMQ) for expiration jobs.
+- **Containerization**: Docker & Docker Compose.
+- **Tooling**: Skaffold (optional), Kubernetes (manifests included).
+
+## ✨ Key Features
+
+- **Real-time UI**: The frontend updates instantly via Server-Sent Events (SSE) when order statuses change (e.g., Created -> Cancelled).
+- **Saga Pattern**: Implements a choreography-based saga for order fulfillment. If an order isn't paid within 15 minutes, the Expiration service triggers a cancellation event, releasing reserved inventory.
+- **Optimistic Concurrency Control**: MongoDB versioning prevents race conditions on order updates.
+- **Premium UX**:
+  - Sticky, scrollable cart with real-time total calculation.
+  - "Lock-down" mode: Cart editing is disabled while an order is pending payment.
+  - Live order expiration timers on the dashboard.
+  - Seamless "One-Click" payment simulation.
+
+## 🛠 Getting Started
+
+### Prerequisites
+
+- Docker Desktop
+- Node.js 18+ (for local client dev)
+
+### Running Locally (Docker Compose)
+
+The easiest way to start the entire system:
+
+1.  **Clone the repository**
+2.  **Start the services**:
+
+    ```bash
+    docker-compose up --build
+    ```
+
+    This will spin up:
+    - All microservices (Auth, Orders, Payments, Expiration)
+    - MongoDB instance
+    - Redpanda (Kafka)
+    - Redis
+
+3.  **Start the Client**:
+    Open a new terminal and run the frontend:
+
+    ```bash
+    cd client
+    npm install
+    npm run dev
+    ```
+
+4.  **Access the App**:
+    Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+## 🧪 Testing the Flow
+
+1.  **Sign Up**: Create an account.
+2.  **Add to Cart**: Add items from the storefront.
+3.  **Checkout**: Click "Proceed to Checkout". This creates an order and reserves the ticket.
+    - _Observe_: The cart locks, and an order appears in the history with "Created" status and a 15-minute timer.
+4.  **Pay**: Click "Pay Now" on the order card.
+    - _Result_: Order moves to "Completed".
+5.  **Timeout Test**: Create an order but _don't_ pay. Wait 15 minutes (or adjust `expiration/src/events/listeners/order-created-listener.ts` for testing).
+    - _Result_: Order automatically moves to "Cancelled".
+
+## 📂 Project Structure
+
+```
+├── auth/           # Authentication Service
+├── client/         # React Frontend
+├── common/         # Shared NPM library (events, middlewares)
+├── expiration/     # job scheduler for order timeouts
+├── orders/         # Order management & Saga coordinator
+├── payments/       # Payment processing
+└── infra/          # K8s manifests (optional)
 ```
 
-## Simulation Scenarios
+## 🎨 UI Theme
 
-### 1. Order Timeout (Expired)
+Refreshed with a "Modern Boutique" aesthetic:
 
-1. In the UI, click **Buy Now**.
-2. Wait 15 seconds without paying.
-3. Observe the status change from **CREATED** to **CANCELLED**.
-
-### 2. Successful Payment
-
-1. In the UI, click **Buy Now**.
-2. Immediately click the green **Pay Now** button.
-3. Observe the status change to **COMPLETED**. The expiration timer is automatically cancelled.
-
-## API Reference (Internal)
-
-- **Auth**: `POST /api/users/signup`
-- **Products**: `GET /api/products`
-- **Orders**: `POST /api/orders`, `GET /api/orders`
-- **Payments**: `POST /api/payments/pay`
+- **Pastel Palette**: Soft blue/indigo gradients for backgrounds.
+- **Minimalism**: Clean white cards with subtle shadows.
+- **Typography**: Inter font for high readability.
+- **Feedback**: Animated badges for live system status and order timeouts.
