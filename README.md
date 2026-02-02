@@ -97,5 +97,4 @@ The easiest way to start the entire system:
 ├── expiration/     # Order timeout management
 ├── orders/         # Order management & Saga coordinator
 ├── payments/       # Payment processing
-└── infra/          # K8s manifests (optional)
 ```
