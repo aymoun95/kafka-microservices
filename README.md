@@ -8,7 +8,7 @@ The application is composed of loosely coupled microservices that communicate as
 
 ### Microservices
 
-- **Auth Service (`/auth`)**: Handles user authentication (JWT), signup/signin flows.
+- **Auth Service (`/auth`)**: Handles user authentication, signup/signin flows.
 - **Products Service**: Manages product catalog and inventory.
 - **Orders Service (`/orders`)**: Core order management. Handles order creation, status transitions (Created -> Cancelled/Completed), and coordinates the order saga.
 - **Payments Service (`/payments`)**: Processes mock payments. Listens for created orders and emits payment completed events.
