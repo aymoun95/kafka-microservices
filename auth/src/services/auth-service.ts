@@ -1,4 +1,3 @@
-import { UserCreatedProducer } from "../events/producers/user-created-producer";
 import { User, UserRepository } from "../repositories/user-repository";
 
 export class AuthService {
@@ -15,11 +14,6 @@ export class AuthService {
     };
 
     await this.userRepository.create(user);
-
-    await UserCreatedProducer.publish({
-      email: user.email,
-      timestamp: new Date(),
-    });
 
     return user;
   }

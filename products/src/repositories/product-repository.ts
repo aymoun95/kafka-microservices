@@ -13,9 +13,4 @@ export class ProductRepository {
   async findAll(): Promise<Product[]> {
     return products;
   }
-
-  async create(product: Product): Promise<Product> {
-    products.push(product);
-    return product;
-  }
 }

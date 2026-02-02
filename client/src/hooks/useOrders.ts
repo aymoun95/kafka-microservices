@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { API_BASE_URLS } from "../constants";
 
 interface Order {
   id: string;
@@ -12,16 +13,11 @@ export const useOrders = (
   onOrderCompleted: (order: Order) => void,
 ) => {
   const [orders, setOrders] = useState<Order[]>([]);
-  const [processedOrderIds, setProcessedOrderIds] = useState<Set<string>>(
-    new Set(),
-  );
-
-  const ORDERS_URL = "http://localhost:3002/api/orders";
 
   const fetchOrders = useCallback(async () => {
     if (!currentUser) return;
     try {
-      const res = await fetch(ORDERS_URL);
+      const res = await fetch(API_BASE_URLS.ORDERS);
       const data = await res.json();
       setOrders(data);
     } catch (e) {
@@ -38,7 +34,7 @@ export const useOrders = (
   useEffect(() => {
     if (!currentUser) return;
 
-    const eventSource = new EventSource(`${ORDERS_URL}/events`);
+    const eventSource = new EventSource(`${API_BASE_URLS.ORDERS}/events`);
 
     eventSource.onmessage = (event) => {
       const data = JSON.parse(event.data);
@@ -46,16 +42,6 @@ export const useOrders = (
       setOrders((prevOrders) => {
         const order = prevOrders.find((o) => o.id === data.orderId);
         if (!order) return prevOrders;
-
-        if (data.status === "cancelled") {
-          setProcessedOrderIds((prevProcessed) => {
-            if (prevProcessed.has(data.orderId)) return prevProcessed;
-            const newProcessed = new Set(prevProcessed);
-            newProcessed.add(data.orderId);
-            onOrderExpired(order);
-            return newProcessed;
-          });
-        }
 
         if (data.status === "completed") {
           onOrderCompleted(order);

@@ -37,7 +37,6 @@ services:
         sleep 2;
       done;
       echo 'Creating topics...';
-      /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:29092 --create --if-not-exists --topic user-created --replication-factor 1 --partitions 1;
       /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:29092 --create --if-not-exists --topic order-created --replication-factor 1 --partitions 1;
       /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:29092 --create --if-not-exists --topic payment-created --replication-factor 1 --partitions 1;
       /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:29092 --create --if-not-exists --topic expiration-complete --replication-factor 1 --partitions 1;

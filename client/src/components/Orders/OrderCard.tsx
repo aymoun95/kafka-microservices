@@ -15,20 +15,20 @@ interface OrderCardProps {
   onPay: (orderId: string) => void;
 }
 
-export const OrderCard: React.FC<OrderCardProps> = ({ order, onPay }) => {
-  const getBadgeVariant = (status: string) => {
-    switch (status.toLowerCase()) {
-      case "created":
-        return "blue";
-      case "completed":
-        return "emerald";
-      case "cancelled":
-        return "rose";
-      default:
-        return "slate";
-    }
-  };
+const getBadgeVariant = (status: string) => {
+  switch (status.toLowerCase()) {
+    case "created":
+      return "blue";
+    case "completed":
+      return "emerald";
+    case "cancelled":
+      return "rose";
+    default:
+      return "slate";
+  }
+};
 
+export const OrderCard: React.FC<OrderCardProps> = ({ order, onPay }) => {
   return (
     <Card className="p-5 hover:shadow-md transition-shadow duration-300 bg-white">
       <div className="flex justify-between items-start mb-4">
