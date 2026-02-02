@@ -36,7 +36,7 @@ function App() {
     processPayment,
     handleManualPay,
     closePaymentModal,
-  } = useCheckout(cartItems, fetchOrders, showNotification);
+  } = useCheckout(currentUser, cartItems, fetchOrders, showNotification);
 
   const handleSignup = async (email: string) => {
     const result = await signup(email);

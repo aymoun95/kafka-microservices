@@ -5,8 +5,8 @@ const orderService = new OrderService();
 
 export class OrderController {
   static async create(req: Request, res: Response) {
-    const { productIds } = req.body;
-    const order = await orderService.createOrder(productIds);
+    const { userId, productIds } = req.body;
+    const order = await orderService.createOrder(userId, productIds);
     res.status(201).send(order);
   }
 

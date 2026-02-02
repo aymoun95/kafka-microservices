@@ -9,8 +9,4 @@ export class AuthController {
     const user = await authService.signup(email);
     res.status(201).send(user);
   }
-
-  static async currentUser(req: Request, res: Response) {
-    res.send({ currentUser: null });
-  }
 }

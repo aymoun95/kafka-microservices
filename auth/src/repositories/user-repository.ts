@@ -10,8 +10,4 @@ export class UserRepository {
     users.push(user);
     return user;
   }
-
-  async findByEmail(email: string): Promise<User | undefined> {
-    return users.find((u) => u.email === email);
-  }
 }

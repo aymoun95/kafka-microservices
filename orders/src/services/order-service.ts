@@ -8,9 +8,10 @@ export class OrderService {
     this.orderRepository = new OrderRepository();
   }
 
-  async createOrder(productIds: string[]) {
+  async createOrder(userId: string, productIds: string[]) {
     const order: Order = {
       id: Math.random().toString(36).substr(2, 9),
+      userId,
       productIds,
       status: "created",
       expiresAt: new Date(new Date().getTime() + 15 * 60000), // 15 mins (though logic uses 15s delay currently)
@@ -27,6 +28,6 @@ export class OrderService {
   }
 
   async updateStatus(orderId: string, status: string) {
-    await this.orderRepository.updateStatus(orderId, status);
+    return this.orderRepository.updateStatus(orderId, status);
   }
 }

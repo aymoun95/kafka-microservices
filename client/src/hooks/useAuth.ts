@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import { API_BASE_URLS } from "../constants";
 
 interface User {
+  id: string;
   email: string;
 }
 
@@ -30,7 +31,7 @@ export const useAuth = () => {
         body: JSON.stringify({ email, password: "password" }),
       });
       const data = await res.json();
-      const user = { email: data.email };
+      const user = { id: data.id, email: data.email };
       login(user);
       return { success: true };
     } catch (e) {

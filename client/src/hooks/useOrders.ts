@@ -34,7 +34,9 @@ export const useOrders = (
   useEffect(() => {
     if (!currentUser) return;
 
-    const eventSource = new EventSource(`${API_BASE_URLS.ORDERS}/events`);
+    const eventSource = new EventSource(
+      `${API_BASE_URLS.ORDERS}/events?userId=${currentUser.id}`,
+    );
 
     eventSource.onmessage = (event) => {
       const data = JSON.parse(event.data);

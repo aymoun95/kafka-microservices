@@ -8,6 +8,7 @@ interface Product {
 }
 
 export const useCheckout = (
+  currentUser: any,
   cartItems: Product[],
   fetchOrders: () => void,
   showNotification: (msg: string) => void,
@@ -28,7 +29,10 @@ export const useCheckout = (
       const response = await fetch(API_BASE_URLS.ORDERS, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productIds: cartItems.map((i) => i.id) }),
+        body: JSON.stringify({
+          userId: currentUser.id,
+          productIds: cartItems.map((i) => i.id),
+        }),
       });
       const order = await response.json();
       fetchOrders();

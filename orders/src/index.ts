@@ -19,12 +19,15 @@ app.get("/api/orders/events", (req, res) => {
   res.setHeader("Connection", "keep-alive");
   res.flushHeaders();
 
-  const clientId = Math.random().toString(36).substring(7);
-  addClient(clientId, res);
+  const userId = req.query.userId as string;
 
-  req.on("close", () => {
-    removeClient(clientId);
-  });
+  if (userId) {
+    addClient(userId, res);
+
+    req.on("close", () => {
+      removeClient(userId, res);
+    });
+  }
 });
 
 const start = async () => {

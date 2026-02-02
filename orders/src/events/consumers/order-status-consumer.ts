@@ -1,5 +1,5 @@
 import { consumer } from "../../config/kafka";
-import { broadcast } from "../../config/sse";
+import { sendToUser } from "../../config/sse";
 import { OrderService } from "../../services/order-service";
 
 const orderService = new OrderService();
@@ -26,8 +26,10 @@ export class OrderStatusConsumer {
         }
 
         if (status) {
-          await orderService.updateStatus(data.orderId, status);
-          broadcast({ orderId: data.orderId, status });
+          const order = await orderService.updateStatus(data.orderId, status);
+          if (order) {
+            sendToUser(order.userId, { orderId: data.orderId, status });
+          }
         }
       },
     });

@@ -8,7 +8,6 @@ app.use(cors());
 app.use(express.json());
 
 app.post("/api/users/signup", AuthController.signup);
-app.get("/api/users/currentuser", AuthController.currentUser);
 
 const start = async () => {
   app.listen(3000, () => {
