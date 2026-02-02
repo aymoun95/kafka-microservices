@@ -19,17 +19,16 @@ The application is composed of loosely coupled microservices that communicate as
 
 Services publish and subscribe to domain events:
 
-- `product:created`
-- `order:created`
-- `order:cancelled`
-- `payment:created`
-- `expiration:complete`
+- `order-created`
+- `order-cancelled`
+- `payment-created`
+- `expiration-complete`
 
 ## 🚀 Tech Stack
 
 - **Frontend**: React 19, TypeScript, TailwindCSS v4 (Minimalist "Boutique" Theme), Vite.
 - **Backend**: Node.js, Express, TypeScript.
-- **Messaging**: Apache Kafka (Redpanda for local dev).
+- **Messaging**: Apache Kafka.
 - **Persistence**: In-Memory (Arrays/Maps).
 - **Containerization**: Docker & Docker Compose.
 
@@ -93,8 +92,8 @@ The easiest way to start the entire system:
 ```
 ├── auth/           # Authentication Service
 ├── client/         # React Frontend
-├── common/         # Shared NPM library (events, middlewares)
 ├── expiration/     # Order timeout management
 ├── orders/         # Order management & Saga coordinator
 ├── payments/       # Payment processing
+├── products/       # Product catalog & inventory
 ```
