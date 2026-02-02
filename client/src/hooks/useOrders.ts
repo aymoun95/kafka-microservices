@@ -45,6 +45,8 @@ export const useOrders = (
 
         if (data.status === "completed") {
           onOrderCompleted(order);
+        } else if (data.status === "cancelled") {
+          onOrderExpired(order);
         }
 
         return prevOrders.map((o) =>

@@ -1,4 +1,5 @@
 import React from "react";
+import { NoOrdersIcon } from "../icons/NoOrdersIcon";
 import { Heading, Text } from "../ui/Typography";
 import OrderCard from "./OrderCard";
 
@@ -45,19 +46,7 @@ export const OrderHistorySection: React.FC<OrderHistorySectionProps> = ({
           <div className="col-span-full py-20 text-center bg-gradient-to-br from-slate-50 to-blue-50/30 rounded-2xl border-2 border-dashed border-slate-200">
             <div className="flex flex-col items-center gap-3">
               <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm">
-                <svg
-                  className="w-8 h-8 text-slate-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  />
-                </svg>
+                <NoOrdersIcon className="w-8 h-8 text-slate-400" />
               </div>
               <Text color="muted" className="font-medium">
                 No orders yet

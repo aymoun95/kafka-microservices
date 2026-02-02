@@ -1,4 +1,5 @@
 import React from "react";
+import { PaymentIcon } from "../icons/PaymentIcon";
 import { Button } from "../ui/Button";
 import { Card } from "../ui/Card";
 import { Heading, Text } from "../ui/Typography";
@@ -31,20 +32,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
         <div className="p-8">
           <div className="text-center mb-8">
             <div className="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center mx-auto mb-4">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-8 w-8 text-black"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
-                />
-              </svg>
+              <PaymentIcon className="h-8 w-8 text-black" />
             </div>
             <Heading variant="h2" className="mb-2">
               Confirm Payment

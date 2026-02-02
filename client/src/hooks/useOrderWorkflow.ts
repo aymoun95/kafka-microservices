@@ -15,7 +15,7 @@ export const useOrderWorkflow = (
   const onOrderExpired = useCallback(
     (order: Order) => {
       showNotification(
-        `❌ ORDER ${order.id.substr(0, 4)} EXPIRED. Cart re-activated.`,
+        `❌ ORDER ${order.id.slice(0, 4)} EXPIRED. Cart re-activated.`,
         5000,
       );
     },

@@ -16,10 +16,10 @@ export const Navbar: React.FC<NavbarProps> = ({ userEmail, onLogout }) => {
             B
           </div>
           <div>
-            <Heading variant="h3" className="!text-base !font-bold !text-black">
+            <Heading variant="h3" className="text-base! font-bold! text-black!">
               The Boutique
             </Heading>
-            <Text size="xs" className="!text-[10px] !text-gray-500">
+            <Text size="xs" className="text-[10px]! text-gray-500!">
               Premium Store
             </Text>
           </div>
@@ -29,11 +29,11 @@ export const Navbar: React.FC<NavbarProps> = ({ userEmail, onLogout }) => {
           <div className="hidden md:flex flex-col items-end">
             <Text
               size="xs"
-              className="!text-[10px] uppercase tracking-wider !text-gray-400"
+              className="text-[10px]! uppercase tracking-wider text-gray-400!"
             >
               Signed in
             </Text>
-            <Text size="sm" className="font-medium !text-black">
+            <Text size="sm" className="font-medium text-black!">
               {userEmail}
             </Text>
           </div>

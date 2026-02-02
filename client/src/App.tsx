@@ -1,4 +1,3 @@
-// Hooks
 import { useAuth } from "./hooks/useAuth";
 import { useCart } from "./hooks/useCart";
 import { useCheckout } from "./hooks/useCheckout";
@@ -6,7 +5,6 @@ import { useNotification } from "./hooks/useNotification";
 import { useOrderWorkflow } from "./hooks/useOrderWorkflow";
 import { useProducts } from "./hooks/useProducts";
 
-// Components
 import AuthForm from "./components/Auth/AuthForm";
 import CartSection from "./components/Cart/CartSection";
 import Navbar from "./components/Navbar/Navbar";
@@ -14,7 +12,6 @@ import OrderHistorySection from "./components/Orders/OrderHistorySection";
 import PaymentModal from "./components/Payment/PaymentModal";
 import Storefront from "./components/Storefront/Storefront";
 
-// UI Primitives
 import { PageShell } from "./components/ui/Layout";
 import { Notification } from "./components/ui/Notification";
 
@@ -40,7 +37,6 @@ function App() {
     closePaymentModal,
   } = useCheckout(cartItems, fetchOrders, showNotification);
 
-  // Handlers
   const handleSignup = async (email: string) => {
     const result = await signup(email);
     if (!result.success) {

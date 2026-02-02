@@ -1,4 +1,6 @@
 import React from "react";
+import { CartEmptyIcon } from "../icons/CartEmptyIcon";
+import { RemoveItemIcon } from "../icons/RemoveItemIcon";
 import { Button } from "../ui/Button";
 import { Card, CardContent } from "../ui/Card";
 import { InfoBox } from "../ui/Notification";
@@ -34,19 +36,7 @@ export const Cart: React.FC<CartProps> = ({
           {items.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center gap-3 opacity-40">
               <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center">
-                <svg
-                  className="w-8 h-8 text-gray-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                  />
-                </svg>
+                <CartEmptyIcon className="w-8 h-8 text-gray-400" />
               </div>
               <Text color="muted" className="font-medium">
                 Your cart is empty
@@ -74,19 +64,7 @@ export const Cart: React.FC<CartProps> = ({
                     onClick={() => onRemove(item.id)}
                     className="text-gray-400 hover:text-black transition-colors p-2 rounded-lg hover:bg-gray-100 disabled:opacity-30 shrink-0"
                   >
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
+                    <RemoveItemIcon className="w-5 h-5" />
                   </button>
                 )}
               </div>
