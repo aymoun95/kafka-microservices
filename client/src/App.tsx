@@ -18,13 +18,14 @@ import { Notification } from "./components/ui/Notification";
 function App() {
   const { currentUser, logout, signup } = useAuth();
   const { cartItems, addToCart, removeFromCart, clearCart } = useCart();
-  const { products } = useProducts();
+  const { products, refreshProducts } = useProducts();
   const { msg, showNotification } = useNotification();
 
   const { orders, fetchOrders } = useOrderWorkflow(
     currentUser,
     clearCart,
     showNotification,
+    refreshProducts,
   );
 
   const {

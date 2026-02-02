@@ -75,6 +75,12 @@ services:
     container_name: products-service
     ports:
       - "3001:3001"
+    environment:
+      - KAFKA_BROKER=kafka:29092
+      - KAFKAJS_NO_PARTITIONER_WARNING=1
+    depends_on:
+      kafka-init:
+        condition: service_completed_successfully
     networks:
       - kafka-network
 

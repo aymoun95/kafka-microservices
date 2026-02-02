@@ -7,6 +7,7 @@ interface Product {
   id: string;
   title: string;
   price: number;
+  stock: number;
 }
 
 interface ProductCardProps {
@@ -22,6 +23,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   isLoading,
   hasPendingOrder,
 }) => {
+  const isOutOfStock = product.stock <= 0;
+
   return (
     <Card className="group hover:shadow-md transition-shadow duration-300 overflow-hidden">
       <div className="aspect-square bg-gray-100 relative overflow-hidden">
@@ -30,6 +33,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             {product.title.charAt(0)}
           </div>
         </div>
+        {isOutOfStock && (
+          <div className="absolute inset-0 bg-white/60 flex items-center justify-center">
+            <span className="bg-red-500 text-white px-3 py-1 text-sm font-bold rounded-full">
+              Out of Stock
+            </span>
+          </div>
+        )}
       </div>
 
       <CardContent className="p-4 bg-white">
@@ -39,7 +49,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               {product.title}
             </Heading>
             <Text size="xs" color="muted">
-              Premium Collection
+              {product.stock} items left
             </Text>
           </div>
           <div className="text-right ml-3">
@@ -51,13 +61,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
         <Button
           onClick={() => onBuy(product.id)}
-          disabled={hasPendingOrder}
+          disabled={hasPendingOrder || isOutOfStock}
           isLoading={isLoading}
-          variant="primary"
+          variant={isOutOfStock ? "secondary" : "primary"}
           size="sm"
           className="w-full"
         >
-          Add to Cart
+          {isOutOfStock ? "Out of Stock" : "Add to Cart"}
         </Button>
       </CardContent>
     </Card>

@@ -11,6 +11,7 @@ export const useOrderWorkflow = (
   currentUser: any,
   clearCart: () => void,
   showNotification: (msg: string, duration?: number) => void,
+  refreshProducts?: () => void,
 ) => {
   const onOrderExpired = useCallback(
     (order: Order) => {
@@ -25,7 +26,10 @@ export const useOrderWorkflow = (
   const onOrderCompleted = useCallback(() => {
     clearCart();
     showNotification(`✅ Payment successful! Enjoy your items.`, 3000);
-  }, [clearCart, showNotification]);
+    if (refreshProducts) {
+      refreshProducts();
+    }
+  }, [clearCart, showNotification, refreshProducts]);
 
   const { orders, fetchOrders } = useOrders(
     currentUser,
